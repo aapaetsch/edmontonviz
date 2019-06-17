@@ -3,7 +3,7 @@ import { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";// this is needed for shards?
-import "shards-ui/dist/css/shards.min.css"; //this is needed for shards?
+//import "shards-ui/dist/css/shards.min.css"; //this is needed for shards?
 import { Layout } from 'antd';
 import Test from "./Containers/Test";
 import BusMap from "./Containers/BusMap";
