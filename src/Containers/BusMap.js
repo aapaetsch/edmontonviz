@@ -3,7 +3,7 @@ import { Button } from "shards-react";
 import ReactDOM from 'react-dom';
 import ReactMapboxGl, { Layer, Feature, Marker } from "react-mapbox-gl";
 import { Icon } from 'antd';
-
+//http://alex3165.github.io/react-mapbox-gl/demos
 
 const Map = ReactMapboxGl({
     accessToken: 'pk.eyJ1IjoiYXBhZXRzY2giLCJhIjoiY2p3czk5ZWZyMGNzczRhbzhpdjV1NjM0YyJ9.l5Hitn6UuOWC5DoIEl5KHg'
@@ -73,9 +73,8 @@ class BusMap extends Component{
                     containerStyle={{ width: '85vw', height: '90vh'}}
                     center={this.props.center}>
                     <div>
-                    <Marker coordinates={[-113.5054,53.5372]} anchor="bottom"><Icon type="environment" theme="twoTone" /></Marker>
                     {this.state.busData.map((item, index) => {
-                        return (<Marker key={index} coordinates={[item.long0, item.lat]} anchor="bottom">
+                        return (<Marker key={index} coordinates={[item.long, item.lat]} anchor="bottom">
                         <Icon type="environment" theme="twoTone"/> </Marker>)})}
                     </div>
                 </Map>
