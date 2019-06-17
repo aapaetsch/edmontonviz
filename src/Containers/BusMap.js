@@ -32,11 +32,12 @@ class BusMap extends Component{
         super(props);
     }
     state = {
-        busData: []
+        busData: [],
+
     }
 
     componentWillMount(){
-        // this.tick = setInterval(this.getBusses(), 60000);
+        this.getBusses();
         // setInterval(console.log('tick'), 1000);
 
     }
@@ -65,14 +66,6 @@ class BusMap extends Component{
                     </div>
                 </Map>)
     render() {
-
-        const busLocations = this.state.busData.map((item, index) => {
-            return <Marker id={index} coordinates={[item.lat,item.long]}
-            anchor="bottom"><Icon type="environment" theme="twoTone" /></Marker>
-        });
-        console.log(busLocations);
-
-
         return (
             <div>
             <Map
@@ -81,7 +74,9 @@ class BusMap extends Component{
                     center={this.props.center}>
                     <div>
                     <Marker coordinates={[-113.5054,53.5372]} anchor="bottom"><Icon type="environment" theme="twoTone" /></Marker>
-                    {busLocations}
+                    {this.state.busData.map((item, index) => {
+                        return (<Marker key={index} coordinates={[item.long0, item.lat]} anchor="bottom">
+                        <Icon type="environment" theme="twoTone"/> </Marker>)})}
                     </div>
                 </Map>
 
