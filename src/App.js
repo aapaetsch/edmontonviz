@@ -41,6 +41,7 @@ class App extends Component{
 
             edmontonCenter:[-113.5054,53.5372],
 
+
             showTest: false,
 			showHome: true,
             showBus: false,
@@ -93,6 +94,8 @@ class App extends Component{
     //<---------------Start of Bus Methods ------------>
     getBusContent(){
         let busData=[];
+        let geoList = [];
+
         // let busNumbers = this.getBusTrips();
         // console.log(busNumbers);
         request(requestSettings, function(error, response, body){
@@ -100,27 +103,46 @@ class App extends Component{
                 var feed = gtfsrealtime.transit_realtime.FeedMessage.decode(body);
                 feed.entity.forEach(function(entity){
                     let aBus = {};
-
                     aBus['id'] = entity.id;
                     aBus['tripId'] = entity.vehicle.trip.tripId;
                     aBus['lat'] = entity.vehicle.position.latitude;
                     aBus['long'] = entity.vehicle.position.longitude;
-
                     try{aBus['speed'] = entity.vehicle.position.speed}
                     catch(err){aBus['speed'] = 0}
-
                     try{aBus['bearing'] = entity.vehicle.position.bearing}
                     catch(err){aBus['bearing'] = null}
 
                     // try{aBus['number'] = busNumbers[entity.vehicle.trip.tripId.toString()]}
                     // catch(err){aBus['number'] = null}
-
                     busData.push(aBus);
+
+                    let geoItem = {
+                        "type": "Feature",
+                        "properties":{
+                            "marker-color": "#0000ff",
+                            "marker-size": "small",
+                            "marker-symbol": "bus",
+                            "id": entity.id,
+                            "tripId": entity.vehicle.trip.tripId,
+                            "speed": entity.vehicle.speed,
+                            "bearing": entity.vehicle.bearing
+                        }, "geometry": {
+                            "type": "Point",
+                            "coordinates": [data[i].long, data[i].lat]
+                        }
+                    }
+
+
+
+
+
+
                 });
             }
         });
         console.log('here is the edited data', busData);
-        return busData;
+        let busJson = {"type": "FeatureCollection", "features": geoList}
+        return busData, busJson;
     }
 
     getBusTrips(){

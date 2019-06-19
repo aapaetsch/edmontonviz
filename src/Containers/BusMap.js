@@ -33,16 +33,17 @@ class BusMap extends Component{
     }
     state = {
         busData: [],
+        geoBuson: {},
 
     }
 
     componentWillMount(){
         this.getBusses();
+
         // setInterval(console.log('tick'), 1000);
 
     }
     componentDidUpdate(prevProps, nextProps){
-        console.log(prevProps.busState);
         console.log(nextProps);
     }
 
@@ -53,10 +54,48 @@ class BusMap extends Component{
         this.setState({busData:[]});
     }
 
+    makeGeoJson(data){
+        let geoList = []
+        console.log(data);
+        var i;
+
+
+        // for (i = 0; i < data.length; i++){
+        //     let geoItem = {
+        //         "type":"Feature",
+        //         "properties": {
+        //             "marker-color": "#0000ff",
+        //             "marker-size": "small",
+        //             "marker-symbol": "bus",
+        //         },
+        //         "geometry": {
+        //             "type":"Point",
+        //             "coordinates": [data[i].long, data[i].lat]
+        //         }
+        //     }
+        //     console.log(geoItem);
+        //     geoList.push(geoItem);
+        // }
+        let geojson = {"type": "FeatureCollection", "features": geoList }
+        console.log(geojson);
+        return geojson;
+    }
+
     getBusses(){
         let busses = this.props.getContent();
-        this.setState({busData: busses});
+
+        if (busses != []){
+            let geoDude =  this.makeGeoJson(busses);
+            this.setState({
+                busData: busses,
+                geoBuson: geoDude,
+            });
+        } else {
+            this.getBusses();
+        }
+
     }
+
     contentd = (<Map
                     style="mapbox://styles/apaetsch/cjw2k3na404qn1csfznqo90z7"
                     containerStyle={{ width: '85vw', height: '90vh'}}
@@ -65,24 +104,25 @@ class BusMap extends Component{
                     <Marker coordinates={[-113.5054,53.5372]} anchor="bottom"><Icon type="environment" theme="twoTone" /></Marker>
                     </div>
                 </Map>)
+
     render() {
+
         return (
+
             <div>
-            <Map
+                <Map
                     style="mapbox://styles/apaetsch/cjw2k3na404qn1csfznqo90z7"
                     containerStyle={{ width: '85vw', height: '90vh'}}
                     center={this.props.center}>
                     <div>
-                    {this.state.busData.map((item, index) => {
-                        return (<Marker key={index} coordinates={[item.long, item.lat]} anchor="bottom">
-                        <Icon type="environment" theme="twoTone"/> </Marker>)})}
+                        {this.state.busData.map((item, index) => {
+                            return (<Marker key={index} coordinates={[item.long, item.lat]} anchor="bottom">
+                                    <Icon type="environment" theme="twoTone"/> </Marker>)})}
                     </div>
                 </Map>
-
             </div>
+
         );
         }
     }
-
-
 export default BusMap;
