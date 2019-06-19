@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import { Menu, Icon, Button, Checkbox} from 'antd';
+import { Menu, Icon, Checkbox} from 'antd';
 
 const MIG = Menu.ItemGroup;
-const MenuItemGroup = Menu.ItemGroup;
 const SM = Menu.SubMenu;
 class SideMenu extends Component{
     constructor(props){
