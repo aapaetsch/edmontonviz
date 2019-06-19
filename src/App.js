@@ -100,18 +100,21 @@ class App extends Component{
         // console.log(busNumbers);
         request(requestSettings, function(error, response, body){
             if (!error && response.statusCode === 200){
-                var feed = gtfsrealtime.transit_realtime.FeedMessage.decode(body);
+                let feed = gtfsrealtime.transit_realtime.FeedMessage.decode(body);
                 feed.entity.forEach(function(entity){
+                    let aSpeed;
+                    let aBearing;
                     let aBus = {};
                     aBus['id'] = entity.id;
                     aBus['tripId'] = entity.vehicle.trip.tripId;
                     aBus['lat'] = entity.vehicle.position.latitude;
                     aBus['long'] = entity.vehicle.position.longitude;
-                    try{aBus['speed'] = entity.vehicle.position.speed}
-                    catch(err){aBus['speed'] = 0}
-                    try{aBus['bearing'] = entity.vehicle.position.bearing}
-                    catch(err){aBus['bearing'] = null}
-
+                    try{aSpeed = entity.vehicle.position.speed}
+                    catch(err){aSpeed = 0}
+                    try{aBearing = entity.vehicle.position.bearing}
+                    catch(err){aBearing = null}
+                    aBus['speed'] = aSpeed;
+                    aBus['bearing'] = aBearing;
                     // try{aBus['number'] = busNumbers[entity.vehicle.trip.tripId.toString()]}
                     // catch(err){aBus['number'] = null}
                     busData.push(aBus);
@@ -123,25 +126,22 @@ class App extends Component{
                             "marker-size": "small",
                             "marker-symbol": "bus",
                             "id": entity.id,
+                            "number": 'unknown',
                             "tripId": entity.vehicle.trip.tripId,
-                            "speed": entity.vehicle.speed,
-                            "bearing": entity.vehicle.bearing
+                            "speed": aSpeed,
+                            "bearing": aBearing
                         }, "geometry": {
                             "type": "Point",
-                            "coordinates": [data[i].long, data[i].lat]
+                            "coordinates": [entity.vehicle.position.longitude, entity.vehicle.position.latitude]
                         }
                     }
-
-
-
-
-
-
+                    geoList.push(geoItem);
                 });
             }
         });
         console.log('here is the edited data', busData);
         let busJson = {"type": "FeatureCollection", "features": geoList}
+        console.log(busJson);
         return busData, busJson;
     }
 

@@ -54,38 +54,11 @@ class BusMap extends Component{
         this.setState({busData:[]});
     }
 
-    makeGeoJson(data){
-        let geoList = []
-        console.log(data);
-        var i;
-
-
-        // for (i = 0; i < data.length; i++){
-        //     let geoItem = {
-        //         "type":"Feature",
-        //         "properties": {
-        //             "marker-color": "#0000ff",
-        //             "marker-size": "small",
-        //             "marker-symbol": "bus",
-        //         },
-        //         "geometry": {
-        //             "type":"Point",
-        //             "coordinates": [data[i].long, data[i].lat]
-        //         }
-        //     }
-        //     console.log(geoItem);
-        //     geoList.push(geoItem);
-        // }
-        let geojson = {"type": "FeatureCollection", "features": geoList }
-        console.log(geojson);
-        return geojson;
-    }
-
     getBusses(){
-        let busses = this.props.getContent();
+        let busses, geoDude = this.props.getContent();
 
         if (busses != []){
-            let geoDude =  this.makeGeoJson(busses);
+
             this.setState({
                 busData: busses,
                 geoBuson: geoDude,
