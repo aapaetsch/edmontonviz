@@ -57,15 +57,11 @@ class BusMap extends Component{
     getBusses(){
         let busses, geoDude = this.props.getContent();
 
-        if (busses != []){
+        this.setState({
+            busData: busses,
+            geoBuson: geoDude,
+        });
 
-            this.setState({
-                busData: busses,
-                geoBuson: geoDude,
-            });
-        } else {
-            this.getBusses();
-        }
 
     }
 

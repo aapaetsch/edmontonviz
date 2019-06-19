@@ -141,7 +141,7 @@ class App extends Component{
         });
         console.log('here is the edited data', busData);
         let busJson = {"type": "FeatureCollection", "features": geoList}
-        console.log(busJson);
+        console.log('here is deh bus json', busJson);
         return busData, busJson;
     }
 
