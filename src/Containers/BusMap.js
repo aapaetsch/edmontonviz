@@ -83,11 +83,7 @@ class BusMap extends Component{
                     style="mapbox://styles/apaetsch/cjw2k3na404qn1csfznqo90z7"
                     containerStyle={{ width: '85vw', height: '90vh'}}
                     center={this.props.center}>
-                    <div>
-                        {this.state.busData.map((item, index) => {
-                            return (<Marker key={index} coordinates={[item.long, item.lat]} anchor="bottom">
-                                    <Icon type="environment" theme="twoTone"/> </Marker>)})}
-                    </div>
+                    /
                 </Map>
             </div>
 

@@ -104,11 +104,6 @@ class App extends Component{
                 feed.entity.forEach(function(entity){
                     let aSpeed;
                     let aBearing;
-                    let aBus = {};
-                    aBus['id'] = entity.id;
-                    aBus['tripId'] = entity.vehicle.trip.tripId;
-                    aBus['lat'] = entity.vehicle.position.latitude;
-                    aBus['long'] = entity.vehicle.position.longitude;
                     try{aSpeed = entity.vehicle.position.speed}
                     catch(err){aSpeed = 0}
                     try{aBearing = entity.vehicle.position.bearing}
@@ -139,7 +134,6 @@ class App extends Component{
                 });
             }
         });
-        console.log('here is the edited data', busData);
         let busJson = {"type": "FeatureCollection", "features": geoList}
         console.log('here is deh bus json', busJson);
         return busData, busJson;
