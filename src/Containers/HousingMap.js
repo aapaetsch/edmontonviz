@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Button } from "shards-react";
 import ReactDOM from 'react-dom';
-import ReactMapboxGl, { Layer, Feature, Marker } from "react-mapbox-gl";
+import ReactMapboxGl, { Layer, Feature, Marker, GeolocateControl } from "react-mapbox-gl";
 import { Icon } from 'antd';
 
 const Map = ReactMapboxGl({
@@ -37,7 +37,12 @@ class HousingMap extends Component{
                 <Map
                     style="mapbox://styles/apaetsch/cjw2k3na404qn1csfznqo90z7"
                     containerStyle={{ width: '85vw', height: '90vh'}}
-                    center={this.props.center}>
+                    center={this.props.center}
+                    >
+                    <GeolocateControl
+                        trackUserLocation={true}
+                        showUserLocation={true}
+                    />
 
                 </Map>
             </div>

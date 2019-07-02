@@ -180,7 +180,7 @@ class App extends Component{
                                     getContent={this.getBusContent}
                                     />
                } else if (this.state.showHouse){
-                   bodyContent = <HousingMap />
+                   bodyContent = <HousingMap center={this.state.edmontonCenter}/>
                }
 		}else if (this.state.showHome){
            	bodyContent = this.logo;
