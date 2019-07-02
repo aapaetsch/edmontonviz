@@ -103,11 +103,19 @@ class App extends Component{
                 let feed = gtfsrealtime.transit_realtime.FeedMessage.decode(body);
                 feed.entity.forEach(function(entity){
                     let aSpeed;
+                    let aBus = {};
                     let aBearing;
-                    try{aSpeed = entity.vehicle.position.speed}
-                    catch(err){aSpeed = 0}
-                    try{aBearing = entity.vehicle.position.bearing}
-                    catch(err){aBearing = null}
+                    if (entity.vehicle.position.speed === undefined){
+                        aSpeed = 0;
+                    } else {
+                        aSpeed = entity.vehicle.position.speed;
+                    }
+                    if (entity.vehicle.position.bearing === undefined){
+                        aBearing = 0;
+                    } else {
+                        aBearing = entity.vehicle.position.bearing;
+                    }
+
                     aBus['speed'] = aSpeed;
                     aBus['bearing'] = aBearing;
                     // try{aBus['number'] = busNumbers[entity.vehicle.trip.tripId.toString()]}
